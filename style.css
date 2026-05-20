@@ -673,21 +673,3 @@ img { max-width: 100%; }
   .about-data { justify-content: center; }
   .hero-name { font-size: 1.9rem; }
 }
-
-.filtro-btn {
-  padding: 0.5rem 1.25rem;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: var(--transition);
-}
-.filtro-btn:hover,
-.filtro-btn.activo {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-
