@@ -80,7 +80,7 @@ backToTop.addEventListener('click', () => {
 
 // ===== FORMULARIO DE CONTACTO REAL (Formspree) =====
 const form   = document.getElementById('contactForm');
-const FORM_ID = 'TU_FORM_ID_AQUI'; // <-- reemplaza esto
+const FORM_ID = 'xzdwdorj'; // <-- reemplaza esto
 
 function showError(inputId, errorId, message) {
   const input = document.getElementById(inputId);
@@ -158,7 +158,7 @@ form.addEventListener('submit', async (e) => {
   };
 
   try {
-    const res = await fetch(`https://formspree.io/f/xzdwdorj}`, {
+    const res = await fetch(`https://formspree.io/f/${FORM_ID}`, {
       method:  'POST',
       headers: {
         'Content-Type': 'application/json',
