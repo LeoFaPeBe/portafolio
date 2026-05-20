@@ -234,29 +234,6 @@ function typing() {
 
 typing();
 
-// ===== ANIMACIONES AL HACER SCROLL =====
-const animados = document.querySelectorAll(
-  '.skill-card, .project-card, .about-grid, .contact-grid, .section-title'
-);
-
-animados.forEach(el => {
-  el.classList.add('anim-oculto');
-});
-
-const scrollObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.remove('anim-oculto');
-        entry.target.classList.add('anim-visible');
-      }, i * 100);
-      scrollObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-animados.forEach(el => scrollObserver.observe(el));
-
 // ===== MODO CLARO / OSCURO =====
 const themeToggle = document.getElementById('themeToggle');
 const root        = document.documentElement;
