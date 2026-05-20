@@ -240,17 +240,15 @@ const animados = document.querySelectorAll(
 );
 
 animados.forEach(el => {
-  el.style.opacity    = '0';
-  el.style.transform  = 'translateY(30px)';
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  el.classList.add('anim-oculto');
 });
 
 const scrollObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
       setTimeout(() => {
-        entry.target.style.opacity   = '1';
-        entry.target.style.transform = 'translateY(0)';
+        entry.target.classList.remove('anim-oculto');
+        entry.target.classList.add('anim-visible');
       }, i * 100);
       scrollObserver.unobserve(entry.target);
     }
