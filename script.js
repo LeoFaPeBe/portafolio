@@ -78,8 +78,9 @@ backToTop.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// ===== FORMULARIO DE CONTACTO =====
-const form = document.getElementById('contactForm');
+// ===== FORMULARIO DE CONTACTO REAL (Formspree) =====
+const form   = document.getElementById('contactForm');
+const FORM_ID = 'TU_FORM_ID_AQUI'; // <-- reemplaza esto
 
 function showError(inputId, errorId, message) {
   const input = document.getElementById(inputId);
@@ -138,7 +139,7 @@ function validateForm() {
   return valid;
 }
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   if (!validateForm()) return;
@@ -146,22 +147,47 @@ form.addEventListener('submit', (e) => {
   const btn     = form.querySelector('button[type="submit"]');
   const success = document.getElementById('formSuccess');
 
-  btn.disabled = true;
+  btn.disabled  = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-  // Simula envío (puedes conectar un backend o EmailJS aquí)
-  setTimeout(() => {
-    btn.style.display  = 'none';
-    success.style.display = 'block';
-    form.reset();
+  const datos = {
+    nombre:  document.getElementById('nombre').value.trim(),
+    email:   document.getElementById('email').value.trim(),
+    asunto:  document.getElementById('asunto').value.trim(),
+    message: document.getElementById('mensaje').value.trim()
+  };
 
-    setTimeout(() => {
-      btn.style.display  = 'flex';
-      btn.disabled       = false;
-      btn.innerHTML      = '<i class="fas fa-paper-plane"></i> Enviar mensaje';
-      success.style.display = 'none';
-    }, 4000);
-  }, 1500);
+  try {
+    const res = await fetch(`https://formspree.io/f/xzdwdorj}`, {
+      method:  'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept':       'application/json'
+      },
+      body: JSON.stringify(datos)
+    });
+
+    if (res.ok) {
+      btn.style.display     = 'none';
+      success.style.display = 'block';
+      form.reset();
+
+      setTimeout(() => {
+        btn.style.display     = 'flex';
+        btn.disabled          = false;
+        btn.innerHTML         = '<i class="fas fa-paper-plane"></i> Enviar mensaje';
+        success.style.display = 'none';
+      }, 4000);
+
+    } else {
+      throw new Error('Error servidor');
+    }
+
+  } catch (err) {
+    btn.disabled  = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar mensaje';
+    alert('Hubo un error al enviar. Intenta de nuevo.');
+  }
 });
 
 // Limpiar error al escribir
